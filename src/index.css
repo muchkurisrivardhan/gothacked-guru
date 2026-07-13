@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: #05070a;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(61,220,132,0.06), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(255,77,94,0.05), transparent 40%);
+  color: #e6edf3;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c2530;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.node-link {
+  stroke: #1c2530;
+  stroke-width: 1.5;
+  fill: none;
+}
+
+svg g[role="button"]:focus-visible circle:first-of-type {
+  stroke: #ffffff;
+  stroke-width: 3;
+}
+
+@keyframes dashFlow {
+  to { stroke-dashoffset: -30; }
+}
+.dash-flow {
+  animation: dashFlow 0.8s linear infinite;
+}
+
+@keyframes gridDrift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-92px, -92px, 0); }
+}
+@keyframes glowA {
+  0% { transform: translate3d(-4%, 0, 0) scale(1); }
+  50% { transform: translate3d(6%, 4%, 0) scale(1.12); }
+  100% { transform: translate3d(-4%, 0, 0) scale(1); }
+}
+@keyframes glowB {
+  0% { transform: translate3d(3%, 2%, 0) scale(1.05); }
+  50% { transform: translate3d(-5%, -3%, 0) scale(1); }
+  100% { transform: translate3d(3%, 2%, 0) scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-flow, .grid-drift, .glow-a, .glow-b {
+    animation: none !important;
+  }
+}
