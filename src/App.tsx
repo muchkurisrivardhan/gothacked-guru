@@ -6,7 +6,6 @@ import TreeGraph, { CATEGORY_COLOR } from "./components/TreeGraph";
 import ScamDetailPanel from "./components/ScamDetailPanel";
 import AdminPortal from "./components/AdminPortal";
 import AmbientBackground from "./components/AmbientBackground";
-import AdSlot from "./components/AdSlot";
 import { findPathToNode, getNodeById } from "./data/scams";
 import type { ScamNode } from "./types";
 
@@ -66,10 +65,6 @@ export default function App() {
         <Disclaimer />
 
         <main className="flex-1 flex flex-col gap-6 px-4 sm:px-8 pb-16">
-          {/* Ad unit 1 of 4 — top leaderboard. Each slot id must be a distinct
-              AdSense unit; swap the placeholders once units are created. */}
-          <AdSlot slot="0000000001" minHeight={90} />
-
           <SearchBar onSelect={handleSearchSelect} />
 
           <div className="flex flex-col items-center gap-4">
@@ -94,12 +89,6 @@ export default function App() {
               ))}
             </div>
           </div>
-
-          {/* Ad unit 2 of 4 — in-feed, below the tree. */}
-          <AdSlot slot="0000000002" className="mt-8" minHeight={140} />
-
-          {/* Ad unit 3 of 4 — footer anchor. */}
-          <AdSlot slot="0000000003" className="mt-4" minHeight={250} />
         </main>
 
         <ScamDetailPanel node={selectedNode} onClose={() => setSelectedLeafId(null)} />

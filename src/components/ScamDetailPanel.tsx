@@ -7,7 +7,6 @@ import { CATEGORY_COLOR } from "./TreeGraph";
 import { findPathToNode } from "../data/scams";
 import { STATE_CYBER_CELLS } from "../data/stateCyberCells";
 import StateDropdown from "./StateDropdown";
-import AdSlot from "./AdSlot";
 
 interface Props {
   node: ScamNode | null;
@@ -278,10 +277,6 @@ export default function ScamDetailPanel({ node, onClose }: Props) {
                   not store your name, contact details, or what you searched for.
                 </p>
               </RevealSection>
-
-              {/* Ad unit 4 of 4 — end of guide, the highest-engagement view.
-                  Kept below the safety steps so it never interrupts them. */}
-              <AdSlot slot="0000000004" minHeight={250} />
             </div>
           </motion.div>
         </>

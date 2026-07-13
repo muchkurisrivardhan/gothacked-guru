@@ -47,16 +47,6 @@ Vercel/Cloudflare Pages auto-detect Vite). The view-counter API is optional: on 
 counter silently no-ops. To keep it, run `node server/index.js` behind a reverse proxy that maps `/api/*`.
 The `/?admin=1` stats page is dev-only and never ships in the production build.
 
-### Google AdSense
-
-1. Get approved for AdSense on the live domain, then grab your publisher id (`ca-pub-…`).
-2. Set `VITE_ADSENSE_CLIENT=ca-pub-…` as a build env var (see `.env.example`) and rebuild.
-3. Replace the placeholder publisher id in `public/ads.txt` with your real one (without the `ca-` prefix).
-4. Create an ad unit in AdSense and put its id in the `<AdSlot slot="…">` in `src/App.tsx`.
-
-Until `VITE_ADSENSE_CLIENT` is set, ad slots render as labelled reserved placeholders — the layout is
-already correct and no third-party script loads.
-
 ## Next steps
 
 1. Verify the content in `scams.ts` (helplines, URLs, procedures) and flip `verified: true` once confirmed.
