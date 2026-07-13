@@ -4,7 +4,15 @@ export default function Disclaimer() {
       This is not the police and not a government website. It's an independent guide to help you understand
       what happened and where to report it. Nothing you do here is tracked to you — no accounts, no personal
       data stored. Helpline numbers/links are being verified; always confirm on{" "}
-      <span className="underline">cybercrime.gov.in</span> if unsure.
+      <a
+        href="https://cybercrime.gov.in"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline hover:text-warn"
+      >
+        cybercrime.gov.in
+      </a>{" "}
+      if unsure.
     </div>
   );
 }

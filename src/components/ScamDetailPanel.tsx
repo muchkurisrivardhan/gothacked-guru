@@ -22,6 +22,42 @@ const CHANNEL_LABEL: Record<ComplaintChannel["type"], string> = {
   email: "Email",
 };
 
+// Matches full http(s) URLs and bare Indian gov/org portal domains in prose.
+const URL_RE = /(https?:\/\/[^\s)]+|(?:[a-z0-9-]+\.)+(?:gov|nic|org|co)\.in(?:\/[^\s),]*)?)/g;
+
+function Linkify({ text }: { text: string }) {
+  const parts = text.split(URL_RE);
+  return (
+    <>
+      {parts.map((p, i) =>
+        i % 2 ? (
+          <a
+            key={i}
+            href={p.startsWith("http") ? p : `https://${p}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-signal underline underline-offset-2 hover:text-white break-all"
+          >
+            {p}
+          </a>
+        ) : (
+          p
+        )
+      )}
+    </>
+  );
+}
+
+function channelHref(c: ComplaintChannel): string | null {
+  if (c.type === "helpline") {
+    // Only single plain numbers ("1930") — not compounds like "112 / 100".
+    return /^[+\d][\d\s-]*$/.test(c.value) ? `tel:${c.value.replace(/\D/g, "")}` : null;
+  }
+  if (c.type === "email") return `mailto:${c.value}`;
+  if (c.type === "portal") return c.value.startsWith("http") ? c.value : `https://${c.value}`;
+  return null;
+}
+
 function accentColorFor(node: ScamNode): string {
   const path = findPathToNode(node.id);
   const category = path?.[path.length - 2];
@@ -97,7 +133,7 @@ export default function ScamDetailPanel({ node, onClose }: Props) {
                         <span className="text-signal font-mono">{i + 1}.</span>
                         <span>{step.title}</span>
                       </div>
-                      <p className="text-ghost mt-1 pl-5">{step.detail}</p>
+                      <p className="text-ghost mt-1 pl-5"><Linkify text={step.detail} /></p>
                     </li>
                   ))}
                 </ol>
@@ -122,7 +158,7 @@ export default function ScamDetailPanel({ node, onClose }: Props) {
                         <span className="text-signal font-mono">{i + 1}.</span>
                         <span>{step.title}</span>
                       </div>
-                      <p className="text-ghost mt-1 pl-5">{step.detail}</p>
+                      <p className="text-ghost mt-1 pl-5"><Linkify text={step.detail} /></p>
                     </li>
                   ))}
                 </ol>
@@ -168,10 +204,27 @@ export default function ScamDetailPanel({ node, onClose }: Props) {
                             </span>
                             <VerificationBadge verified={stateCell.verified} />
                           </div>
-                          <div className="text-signal font-mono text-sm mt-1">{stateCell.phone}</div>
-                          <div className="text-signal font-mono text-xs mt-0.5 break-all">{stateCell.email}</div>
+                          <a
+                            href={`tel:${stateCell.phone.replace(/\D/g, "")}`}
+                            className="block text-signal font-mono text-sm mt-1 underline underline-offset-2 hover:text-white"
+                          >
+                            {stateCell.phone}
+                          </a>
+                          <a
+                            href={`mailto:${stateCell.email}`}
+                            className="block text-signal font-mono text-xs mt-0.5 break-all underline underline-offset-2 hover:text-white"
+                          >
+                            {stateCell.email}
+                          </a>
                           {stateCell.portal && (
-                            <div className="text-signal font-mono text-xs mt-0.5 break-all">{stateCell.portal}</div>
+                            <a
+                              href={stateCell.portal.startsWith("http") ? stateCell.portal : `https://${stateCell.portal}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block text-signal font-mono text-xs mt-0.5 break-all underline underline-offset-2 hover:text-white"
+                            >
+                              {stateCell.portal}
+                            </a>
                           )}
                           <p className="text-ghost text-xs mt-1.5">{stateCell.address}</p>
                           <p className="text-ghost/70 text-[11px] mt-2 border-t border-line pt-2">{stateCell.note}</p>
@@ -190,8 +243,19 @@ export default function ScamDetailPanel({ node, onClose }: Props) {
                             {CHANNEL_LABEL[c.type]}
                           </span>
                         </div>
-                        <div className="text-signal font-mono text-sm mt-1">{c.value}</div>
-                        {c.note && <p className="text-ghost text-xs mt-1">{c.note}</p>}
+                        {channelHref(c) ? (
+                          <a
+                            href={channelHref(c)!}
+                            target={c.type === "portal" ? "_blank" : undefined}
+                            rel={c.type === "portal" ? "noopener noreferrer" : undefined}
+                            className="block text-signal font-mono text-sm mt-1 underline underline-offset-2 hover:text-white break-all"
+                          >
+                            {c.value}
+                          </a>
+                        ) : (
+                          <div className="text-signal font-mono text-sm mt-1">{c.value}</div>
+                        )}
+                        {c.note && <p className="text-ghost text-xs mt-1"><Linkify text={c.note} /></p>}
                       </div>
                     );
                   })}
@@ -202,7 +266,15 @@ export default function ScamDetailPanel({ node, onClose }: Props) {
                 <p className="text-[11px] text-ghost/70 leading-relaxed border-t border-line pt-4">
                   Helpline numbers and portal links here are compiled from public information and marked
                   "needs verification" until independently confirmed. Please cross-check on{" "}
-                  <span className="text-ghost">cybercrime.gov.in</span> before relying on them. This site does
+                  <a
+                    href="https://cybercrime.gov.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-ghost underline underline-offset-2 hover:text-white"
+                  >
+                    cybercrime.gov.in
+                  </a>{" "}
+                  before relying on them. This site does
                   not store your name, contact details, or what you searched for.
                 </p>
               </RevealSection>

@@ -1,5 +1,7 @@
 # gothacked.guru
 
+**Live site: [muchkurisrivardhan.github.io/gothacked-guru](https://muchkurisrivardhan.github.io/gothacked-guru/)**
+
 An anonymous guide for people navigating Indian cyber scams — pick "what happened," drill through a node tree
 (category → scam → step-by-step guide), and find exactly what evidence to gather and where to file a complaint.
 
@@ -20,8 +22,8 @@ expose this route in production without adding auth).
 ## IMPORTANT — before this goes live
 
 Every scam entry in [`src/data/scams.ts`](src/data/scams.ts) is marked `verified: false` and shows a
-"NEEDS VERIFICATION" badge. The helpline numbers (1930, 181, 1098), portal URLs (cybercrime.gov.in,
-sachet.rbi.org.in, scores.sebi.gov.in, ncwapps.nic.in) and step-by-step procedures were compiled from public
+"NEEDS VERIFICATION" badge. The helpline numbers (1930, 181, 1098), portal URLs ([cybercrime.gov.in](https://cybercrime.gov.in),
+[sachet.rbi.org.in](https://sachet.rbi.org.in), [scores.sebi.gov.in](https://scores.sebi.gov.in), [ncwapps.nic.in](https://ncwapps.nic.in)) and step-by-step procedures were compiled from public
 knowledge, not independently confirmed. **Please verify each one against the official source before removing
 the badge or publishing.** Wrong helpline info here could genuinely hurt someone relying on it.
 
