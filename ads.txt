@@ -1,0 +1,3 @@
+# Google AdSense — replace pub-0000000000000000 with your real publisher id
+# (same id as VITE_ADSENSE_CLIENT, without the "ca-" prefix).
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
