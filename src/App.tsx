@@ -94,7 +94,8 @@ export default function App() {
         <ScamDetailPanel node={selectedNode} onClose={() => setSelectedLeafId(null)} />
 
         <footer className="text-center text-[11px] text-ghost/60 py-6">
-          gothacked.guru is an independent, non-commercial resource. No accounts. No tracking of individuals.
+          gothacked.guru is an independent, non-commercial resource. No accounts. No tracking of individuals.{' '}
+          <a className="underline" href="https://github.com/sponsors/muchkurisrivardhan" target="_blank" rel="noopener">Sponsor</a>
         </footer>
       </div>
     </div>
